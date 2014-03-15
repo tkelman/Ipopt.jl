@@ -2,7 +2,7 @@ language: objective-c
 before_install:
     - brew install gfortran
     - brew tap staticfloat/julia
-    - brew install julia
+    - brew install --HEAD julia
     - git config --global user.name "Travis User"
     - git config --global user.email "travis@example.net"
 script:
