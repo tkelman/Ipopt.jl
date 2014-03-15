@@ -18,21 +18,31 @@ provides(SimpleBuild,
     (@build_steps begin
         GetSources(libipopt)
         @build_steps begin
+            CreateDirectory(joinpath(srcdir,"ThirdParty","Blas","build"), true)
+            ChangeDirectory(joinpath(srcdir,"ThirdParty","Blas"))
+            `./get.Blas`
+            ChangeDirectory("build")
+            `../configure --prefix=$prefix --disable-shared --with-pic`
+            `make install`
+            CreateDirectory(joinpath(srcdir,"ThirdParty","Lapack","build"), true)
+            ChangeDirectory(joinpath(srcdir,"ThirdParty","Lapack"))
+            `./get.Lapack`
+            ChangeDirectory("build")
+            `../configure --prefix=$prefix --disable-shared --with-pic`
+            `make install`
+            ChangeDirectory(joinpath(srcdir,"ThirdParty","Mumps"))
+            `./get.Mumps`
             ChangeDirectory(srcdir)
-            @build_steps begin
-                ChangeDirectory(joinpath(srcdir,"ThirdParty","Mumps"))
-                `./get.Mumps`
-            end
-            `./configure --prefix=$prefix --enable-dependency-linking`
+            `./configure --prefix=$prefix --enable-dependency-linking --with-blas=$prefix/lib/libcoinblas.a --with-lapack=$prefix/lib/libcoinlapack.a`
             `make install`
         end
     end),libipopt, os = :Unix)
 
 # OS X
-@osx_only begin
-    using Homebrew
-    provides(Homebrew.HB, "ipopt", libipopt, os = :Darwin)
-end
+#@osx_only begin
+#    using Homebrew
+#    provides(Homebrew.HB, "ipopt", libipopt, os = :Darwin)
+#end
 
 
 # Windows
