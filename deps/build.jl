@@ -45,7 +45,7 @@ provides(SimpleBuild,
             end
             `./configure --prefix=$prefix --enable-dependency-linking coin_skip_warn_cxxflags=yes
                 --with-blas=$prefix/lib/libcoinblas.a --with-lapack=$prefix/lib/libcoinlapack.a
-                LDFLAGS=-Wl,rpath,$(joinpath(prefix,"lib"))`
+                LDFLAGS=-Wl,rpath,$(joinpath(prefix,"lib")) || gist config.log`
             `make install`
         end
     end),libipopt, os = :Unix)
