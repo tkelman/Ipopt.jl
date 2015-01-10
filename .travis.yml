@@ -6,3 +6,4 @@ notifications:
     email: false
 before_install:
     - sudo apt-get install gfortran -y
+    - sudo gem install gist
