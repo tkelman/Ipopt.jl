@@ -5,5 +5,5 @@ julia:
 notifications:
     email: false
 before_install:
-    - sudo apt-get install gfortran -y
+    - sudo apt-get install gfortran rubygems -y
     - sudo gem install gist
